@@ -2,7 +2,7 @@
 using BookingRoomsAPI.DataAccess.PostgreSQL.Pages;
 using BookingRoomsAPI.Domain.Entities;
 
-namespace BookingRoomsAPI.DataAccess.PostgreSQL.Abstractions;
+namespace BookingRoomsAPI.DataAccess.PostgreSQL.Abstractions.Repositories;
 
 public interface IUsersRepository
 {

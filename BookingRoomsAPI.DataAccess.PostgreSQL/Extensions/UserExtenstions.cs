@@ -12,7 +12,7 @@ public static class UserExtenstions
             query = query.Where(u => u.Email == filter.Email);
 
         if (!string.IsNullOrEmpty(filter.Name))
-            query = query.Where(u => u.Name == filter.Name);
+            query = query.Where(u => u.Name.Contains(filter.Name));
 
         if (!string.IsNullOrEmpty(filter.Login))
             query = query.Where(u => u.Login == filter.Login);
