@@ -55,10 +55,10 @@ public class RoomsRepository : IRoomsRepository
         await _context.Rooms
             .Where(r => r.Id == room.Id)
             .ExecuteUpdateAsync(s => s
-            .SetProperty(r => r.Title, room.Title)
-            .SetProperty(r => r.OwnerId, room.OwnerId)
-            .SetProperty(r => r.IsActive, room.IsActive)
-            .SetProperty(r => r.Description, room.Description));
+                .SetProperty(r => r.Title, room.Title)
+                .SetProperty(r => r.OwnerId, room.OwnerId)
+                .SetProperty(r => r.IsActive, room.IsActive)
+                .SetProperty(r => r.Description, room.Description));
     }
 
     public async Task DeleteAsync(Guid id)
