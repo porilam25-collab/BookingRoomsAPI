@@ -1,4 +1,5 @@
-﻿using BookingRoomsAPI.DataAccess.PostgreSQL.Extensions;
+﻿using BookingRoomsAPI.DataAccess.PostgreSQL.Abstractions;
+using BookingRoomsAPI.DataAccess.PostgreSQL.Extensions;
 using BookingRoomsAPI.DataAccess.PostgreSQL.Filters;
 using BookingRoomsAPI.DataAccess.PostgreSQL.Mappers;
 using BookingRoomsAPI.DataAccess.PostgreSQL.Pages;
@@ -7,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookingRoomsAPI.DataAccess.PostgreSQL.Repositories;
 
-public class UsersRepository
+public class UsersRepository : IUsersRepository
 {
     private readonly BookingRoomsDbContext _context;
 
-	public UsersRepository(BookingRoomsDbContext context)
+    public UsersRepository(BookingRoomsDbContext context)
     {
         _context = context;
     }
