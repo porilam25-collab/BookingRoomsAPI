@@ -7,5 +7,5 @@ public class RoomEntity
     public string Description { get; set; } = string.Empty;
     public bool IsActive { get; set; }
     public UserEntity OwnerEntity { get; set; } = null!;
-    public Guid OwnerId { get; set; }
+    public Guid OwnerIds { get; set; }
 }
