@@ -4,6 +4,8 @@ namespace BookingRoomsAPI.Domain.Entities;
 
 public class User
 {
+    private string _passwordHash;
+
     public const int MAX_NAME_LENGTH = 50;
     public const int MAX_LOGIN_LENGTH = 100;
 
@@ -14,7 +16,7 @@ public class User
     public string Name { get; }
     public string Login { get; }
     public string Email { get; }
-    public string PasswordHash { get; }
+    public string PasswordHash { get => _passwordHash; }
     public IReadOnlyCollection<Booking> Bookings { get => _bookings; }
     public IReadOnlyCollection<Room> Rooms { get => _rooms; }
 
@@ -24,7 +26,7 @@ public class User
         Name = name;
         Login = login;
         Email = email;
-        PasswordHash = passwordHash;
+        _passwordHash = passwordHash;
     }
 
     public void AddBooking(Booking booking)
@@ -35,6 +37,11 @@ public class User
     public void AddRoom(Room room)
     {
         _rooms.Add(room);
+    }
+
+    public void SetPasswordHash(string passwordHash)
+    {
+        _passwordHash = passwordHash;
     }
 
     public static Result<User> Create(Guid id, string name, string login, string email, string passwordHash)
