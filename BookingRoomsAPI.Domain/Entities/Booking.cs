@@ -23,7 +23,7 @@ public class Booking
         EndAt = endAt;
         PricePerDay = pricePerDay;
         PricePerMonth = pricePerMonth;
-        TotalPrice = CalculateTotalPrice(pricePerDay, pricePerMonth, startAt, startAt);
+        TotalPrice = CalculateTotalPrice(pricePerDay, pricePerMonth, startAt, endAt);
     }
 
     private decimal CalculateTotalPrice(decimal pricePerDay, decimal pricePerMonth, DateTime startAt, DateTime endAt)

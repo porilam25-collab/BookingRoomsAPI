@@ -69,14 +69,20 @@ public class BookingsController : ControllerBase
             if (user == null)
                 return Unauthorized();
 
-            var bookings = user.Bookings
-                .Select(b => new BookingGet(
-                    b.Id,
-                    b.UserId,
-                    b.RoomId,
-                    b.StartAt,
-                    b.EndAt,
-                    b.TotalPrice));
+            List<BookingGet> bookings = new();
+
+            foreach(var booking in user.Bookings)
+            {
+                _logger.LogInformation(booking.TotalPrice.ToString());
+
+                bookings.Add(new BookingGet(
+                    booking.Id,
+                    booking.UserId,
+                    booking.RoomId,
+                    booking.StartAt,
+                    booking.EndAt,
+                    booking.TotalPrice));
+            }
 
             return Ok(bookings);
         }
