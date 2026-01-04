@@ -3,6 +3,7 @@ using System;
 using BookingRoomsAPI.DataAccess.PostgreSQL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BookingRoomsAPI.DataAccess.PostgreSQL.Migrations
 {
     [DbContext(typeof(BookingRoomsDbContext))]
-    partial class BookingRoomsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260104115539_EditTimezoneInBookingConfiguration")]
+    partial class EditTimezoneInBookingConfiguration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

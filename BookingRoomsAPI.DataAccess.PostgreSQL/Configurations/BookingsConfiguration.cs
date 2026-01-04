@@ -27,11 +27,11 @@ public class BookingsConfiguration : IEntityTypeConfiguration<BookingEntity>
         builder
             .Property(b => b.StartAt)
             .IsRequired()
-            .HasColumnType("timestamp without time zone");
+            .HasColumnType("timestamp with time zone");
 
         builder
             .Property(b => b.EndAt)
             .IsRequired()
-            .HasColumnType("timestamp without time zone");
+            .HasColumnType("timestamp with time zone");
     }
 }
