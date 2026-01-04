@@ -1,4 +1,5 @@
-﻿using BookingRoomsAPI.Domain.Entities;
+﻿using BookingRoomsAPI.DataAccess.PostgreSQL.Abstractions.Services;
+using BookingRoomsAPI.Domain.Entities;
 using BookingRoomsAPI.Options;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -23,7 +24,7 @@ public class JwtService : IJwtService
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Name, user.Login),
-            new Claim(ClaimTypes.Name, user.Email)
+            new Claim(ClaimTypes.Name, user.Name)
         };
 
         var key = new SymmetricSecurityKey(

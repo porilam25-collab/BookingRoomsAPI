@@ -1,4 +1,5 @@
 ﻿using BookingRoomsAPI.DataAccess.PostgreSQL.Abstractions.Repositories;
+using BookingRoomsAPI.DataAccess.PostgreSQL.Abstractions.Services;
 using BookingRoomsAPI.DataAccess.PostgreSQL.Filters;
 using BookingRoomsAPI.DataAccess.PostgreSQL.Pages;
 using BookingRoomsAPI.Domain.Entities;

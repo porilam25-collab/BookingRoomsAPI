@@ -10,6 +10,6 @@ public interface IUserService
     Task<IEnumerable<User>> GetAllUsersAsync(UserFilter filter, UserPage pageParams);
     Task<User?> GetUserByIdAsync(Guid id);
     Task<User> RegistrationAsync(User user, string password);
-    Task<bool> TryLoginAsync(string password, string? email = null, string? login = null);
+    Task<User?> LoginAsync(string password, string? email = null, string? login = null);
     Task UpdateUserAsync(User user);
 }

@@ -47,7 +47,7 @@ public class UserService : IUserService
         return user;
     }
 
-    public async Task<bool> TryLoginAsync(string password, string? email = null, string? login = null)
+    public async Task<User?> LoginAsync(string password, string? email = null, string? login = null)
     {
         if (email == null && login == null)
             throw new ArgumentNullException("Login and email not specified");
@@ -57,13 +57,13 @@ public class UserService : IUserService
             : await _usersRepository.GetByEmailAsync(email);
 
         if (user == null)
-            return false;
+            return null;
 
         var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password);
 
         if (result == PasswordVerificationResult.Success)
-            return true;
+            return user;
 
-        return false;
+        return null;
     }
 }
