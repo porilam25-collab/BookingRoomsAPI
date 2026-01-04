@@ -41,7 +41,7 @@ public class AuthController : ControllerBase
         catch(Exception ex)
         {
             _logger.LogError(ex.Message);
-            return BadRequest(ex.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
 

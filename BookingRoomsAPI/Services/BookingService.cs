@@ -20,6 +20,11 @@ public class BookingService : IBookingService
         return await _bookingsRepository.GetAllAsync(filter, page);
     }
 
+    public async Task<IEnumerable<Booking>> GetAllBookingsAsync()
+    {
+        return await _bookingsRepository.GetAllAsync();
+    }
+
     public async Task<Booking?> GetBookingByIdAsync(Guid id)
     {
         return await _bookingsRepository.GetByIdAsync(id);

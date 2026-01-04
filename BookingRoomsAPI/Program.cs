@@ -58,6 +58,12 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
+builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+
+builder.Services.AddScoped<IRoomService, RoomService>();
+builder.Services.AddScoped<IRoomsRepository, RoomsRepository>();
+
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();

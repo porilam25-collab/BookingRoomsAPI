@@ -9,6 +9,7 @@ namespace BookingRoomsAPI.DataAccess.PostgreSQL.Abstractions.Repositories
         Task AddAsync(Booking booking);
         Task DeleteAsync(Guid id);
         Task<IEnumerable<Booking>> GetAllAsync(BookingFilter filter, BookingPage page);
+        Task<IEnumerable<Booking>> GetAllAsync();
         Task<Booking?> GetByIdAsync(Guid id);
         Task UpdateAsync(Booking booking);
     }

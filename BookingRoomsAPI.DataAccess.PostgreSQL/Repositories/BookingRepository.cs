@@ -31,6 +31,18 @@ public class BookingRepository : IBookingRepository
             .Select(b => b.ToDomain());
     }
 
+    public async Task<IEnumerable<Booking>> GetAllAsync()
+    {
+        var bookingEntities = await _context.Bookings
+            .AsNoTracking()
+            .Include(b => b.UserEntity)
+            .Include(b => b.RoomEntity)
+            .ToListAsync();
+
+        return bookingEntities
+            .Select(b => b.ToDomain());
+    }
+
     public async Task<Booking?> GetByIdAsync(Guid id)
     {
         var bookingEntity = await _context.Bookings
@@ -58,7 +70,6 @@ public class BookingRepository : IBookingRepository
             .ExecuteUpdateAsync(s => s
                 .SetProperty(b => b.PricePerDay, booking.PricePerDay)
                 .SetProperty(b => b.PricePerMonth, booking.PricePerMonth)
-                .SetProperty(b => b.StartAt, booking.StartAt)
                 .SetProperty(b => b.EndAt, booking.EndAt)
                 .SetProperty(b => b.RoomId, booking.RoomId));
     }

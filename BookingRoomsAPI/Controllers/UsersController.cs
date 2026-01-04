@@ -1,76 +1,65 @@
-﻿using BookingRoomsAPI.Contracts.Bookings;
-using BookingRoomsAPI.Contracts.Rooms;
-using BookingRoomsAPI.Contracts.Users;
+﻿using BookingRoomsAPI.Contracts.Users;
 using BookingRoomsAPI.DataAccess.PostgreSQL.Abstractions.Services;
-using BookingRoomsAPI.DataAccess.PostgreSQL.Filters;
-using BookingRoomsAPI.DataAccess.PostgreSQL.Pages;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BookingRoomsAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize(Roles = "Admin")]
 public class UsersController : ControllerBase
 {
     private readonly IUserService _userService;
+    private readonly ILogger<UsersController> _logger;
 
-    public UsersController(IUserService userService)
+	public UsersController(IUserService userService, ILogger<UsersController> logger)
     {
         _userService = userService;
+        _logger = logger;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserGetDto>>> GetAllAsync([FromQuery] UserFilter filter, [FromQuery] UserPage page)
+    [HttpPut]
+    public async Task<ActionResult> UpdateUserAsync([FromBody] UserUpdate userUpdate)
     {
-        var users = await _userService.GetAllUsersAsync(filter, page);
-
-        List<UserGetDto> usersDto = new();
-
-        foreach(var user in users)
+        try
         {
-            List<BookingGetForAdmins> bookings = new();
-            List<RoomGetForAdmins> rooms = new();
+            if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out Guid id))
+                return Unauthorized();
 
-            foreach (var booking in user.Bookings)
-                bookings.Add(new BookingGetForAdmins(
-                    booking.Id,
-                    booking.UserId,
-                    booking.RoomId,
-                    booking.StartAt,
-                    booking.EndAt,
-                    booking.PricePerDay,
-                    booking.PricePerMonth,
-                    booking.TotalPrice));
+            var userResult = Domain.Entities.User.Create(
+                id,
+                userUpdate.Name,
+                userUpdate.Login,
+                userUpdate.Email,
+                "secret_temporary_password");
 
-            foreach(var room in user.Rooms)
-            {
-                rooms.Add(new RoomGetForAdmins(
-                    room.Id,
-                    room.OwnerId,
-                    room.IsActive,
-                    room.Title,
-                    room.Description));
-            }
+            if (!userResult.IsSuccess)
+                return BadRequest(userResult.Error);
 
-            usersDto.Add(new UserGetDto(
-                user.Id,
-                user.Email,
-                user.Login,
-                user.Name,
-                rooms,
-                bookings));
+            await _userService.UpdateUserAsync(userResult.Value!);
+            
+            return Ok();
         }
-
-        return Ok(usersDto);
+        catch(Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
     }
 
     [HttpDelete]
     public async Task<ActionResult> DeleteUserAsync([FromBody] Guid id)
     {
-        await _userService.DeleteUserAsync(id);
+        try
+        {
+            await _userService.DeleteUserAsync(id);
 
-        return NoContent();
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
     }
 }
