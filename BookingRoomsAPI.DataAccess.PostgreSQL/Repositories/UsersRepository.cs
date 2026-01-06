@@ -21,6 +21,7 @@ public class UsersRepository : IUsersRepository
     {
         var userEntities = await _context
             .Users
+            .AsSplitQuery()
             .Include(u => u.Rooms)
             .Include(u => u.Bookings)
             .AsNoTracking()
@@ -36,6 +37,7 @@ public class UsersRepository : IUsersRepository
     {
         var userEntity = await _context
             .Users
+            .AsSplitQuery()
             .Include(u => u.Rooms)
             .Include(u => u.Bookings)
             .AsNoTracking()
@@ -48,6 +50,7 @@ public class UsersRepository : IUsersRepository
     {
         var userEntity = await _context
             .Users
+            .AsSplitQuery()
             .Include(u => u.Rooms)
             .Include(u => u.Bookings)
             .AsNoTracking()
@@ -60,6 +63,7 @@ public class UsersRepository : IUsersRepository
     {
         var userEntity = await _context
             .Users
+            .AsSplitQuery()
             .Include(u => u.Rooms)
             .Include(u => u.Bookings)
             .AsNoTracking()
